@@ -16,11 +16,13 @@ app.get('/', (_request, response) => {
 
 app.get('/products', Products.getAll);
 
+app.post('/products', validateName, validateQuantity, Products.createProduct);
+
 app.get('/products/:id', Products.findById);
 
 app.put('/products/:id', validateName, validateQuantity, Products.updateProduct);
 
-app.post('/products', validateName, validateQuantity, Products.createProduct);
+app.delete('/products/:id', Products.deleteProduct);
 
 app.listen(process.env.PORT, () => {
   console.log(`Escutando na porta ${process.env.PORT}`);
