@@ -22,6 +22,8 @@ app.get('/products/:id', Products.findById);
 app.put('/products/:id', validateProductName, validateProductQuantity, Products.updateProduct);
 app.delete('/products/:id', validateSale, Products.deleteProduct);
 app.post('/sales', Sales.createSale);
+app.get('/sales', Sales.getAll);
+app.get('/sales/:id', Sales.findSaleById);
 
 app.listen(process.env.PORT, () => {
   console.log(`Escutando na porta ${process.env.PORT}`);

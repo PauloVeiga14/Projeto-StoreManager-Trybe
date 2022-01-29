@@ -1,5 +1,19 @@
 const connection = require('./connection');
 
+const getAll = async () => {
+  const [sales] = await connection.execute(`
+  SELECT
+    id, date, product_id, quantity 
+  FROM 
+    StoreManager.sales AS sales
+  JOIN 
+    StoreManager.sales_products AS sales_products
+  ON 
+    sales.id = sales_products.sale_id;
+  `);
+  return sales;
+};
+
 const getAllSales = async () => {
   const [sale] = await connection.execute('SELECT * FROM StoreManager.sales');
   return sale;
@@ -20,6 +34,7 @@ const createSale = async (saleId, productId, quantity) => {
 };
 
 module.exports = {
+  getAll,
   getAllSales,
   createSaleId,
   createSale,

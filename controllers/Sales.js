@@ -1,8 +1,26 @@
 const Sales = require('../models/Sales');
 
-const getAll = async () => {
+const getAll = async (_req, res) => {
   const sales = await Sales.getAll();
-  return sales;
+  return res.status(200).json(sales);
+};
+
+const findSaleById = async (req, res) => {
+  const { id } = req.params;
+  const arrayOfSales = await Sales.getAll();
+  const salesById = arrayOfSales.filter((sale) => sale.id === Number(id));
+  if (salesById.length === 0) return res.status(404).json({ message: 'Sale not found' });
+  const arrayOfSalesById = [];
+  await salesById.map((sale) => { 
+    const newObj = {
+      date: sale.date,
+      productId: sale.product_id,
+      quantity: sale.quantity,
+    };
+  arrayOfSalesById.push(newObj);
+  return arrayOfSalesById;
+  }); 
+  return res.status(200).json(salesById);
 };
 
 const createSaleId = async () => {
@@ -44,5 +62,6 @@ const createSale = async (req, res) => {
   
 module.exports = {
   getAll,
+  findSaleById,
   createSale,
 };

@@ -10,6 +10,7 @@ const validateSale = async (req, res, next) => {
         { message: '"quantity" must be a number larger than or equal to 1' },
       );
     }
+  return {};
   });
 
   next();
