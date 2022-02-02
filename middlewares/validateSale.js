@@ -5,7 +5,7 @@ const getErrors = (arrayOfInputSales) => {
   switch (true) {
     case (!productId):
       return arrayOfErrors.push({ code: 400, message: '"product_id" is required' });
-    case (!quantity):
+    case (quantity === undefined):
       return arrayOfErrors.push({ code: 400, message: '"quantity" is required' });
     case (typeof quantity === 'string' || quantity <= 0):
       return arrayOfErrors.push(

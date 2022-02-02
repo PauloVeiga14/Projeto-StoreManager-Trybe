@@ -7,20 +7,23 @@ const getAll = async (_req, res) => {
 
 const findSaleById = async (req, res) => {
   const { id } = req.params;
-  const arrayOfSales = await Sales.getAll();
-  const salesById = arrayOfSales.filter((sale) => sale.id === Number(id));
-  if (salesById.length === 0) return res.status(404).json({ message: 'Sale not found' });
   const arrayOfSalesById = [];
-  await salesById.map((sale) => { 
+  const arrayOfSales = await Sales.getAll();
+  const salesById = arrayOfSales.filter((sale) => sale.saleId === Number(id));
+  
+  if (salesById.length === 0) return res.status(404).json({ message: 'Sale not found' });
+  
+  salesById.map((sale) => { 
     const newObj = {
       date: sale.date,
       productId: sale.product_id,
       quantity: sale.quantity,
     };
-  arrayOfSalesById.push(newObj);
-  return arrayOfSalesById;
+    arrayOfSalesById.push(newObj);
+    return arrayOfSalesById;
   }); 
-  return res.status(200).json(salesById);
+
+  return res.status(200).json(arrayOfSalesById);
 };
 
 const createSaleId = async () => {

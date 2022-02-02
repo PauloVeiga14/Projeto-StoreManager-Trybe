@@ -22,8 +22,8 @@ app.get('/products/:id', Products.findById);
 app.put('/products/:id', validateProductName, validateProductQuantity, Products.updateProduct);
 app.delete('/products/:id', Products.deleteProduct);
 app.post('/sales', validateSale, Sales.createSale);
-
 app.get('/sales', Sales.getAll);
+
 app.get('/sales/:id', Sales.findSaleById);
 
 app.listen(process.env.PORT, () => {

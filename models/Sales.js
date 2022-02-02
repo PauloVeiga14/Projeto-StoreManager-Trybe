@@ -3,7 +3,7 @@ const connection = require('./connection');
 const getAll = async () => {
   const [sales] = await connection.execute(`
   SELECT
-    id, date, product_id, quantity 
+    id AS saleId, date, product_id, quantity 
   FROM 
     StoreManager.sales AS sales
   JOIN 
