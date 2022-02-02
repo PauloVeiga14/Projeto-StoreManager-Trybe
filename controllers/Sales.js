@@ -54,7 +54,8 @@ const createSale = async (req, res) => {
   const arrayOfInputSales = req.body;
   const saleId = await createSaleId();
   const soldItem = await mapping(saleId, arrayOfInputSales);
-  return res.status(200).json({
+
+  return res.status(201).json({
     id: saleId,
     itemsSold: soldItem, 
   });

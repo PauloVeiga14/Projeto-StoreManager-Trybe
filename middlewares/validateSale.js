@@ -1,17 +1,31 @@
-const validateSale = async (req, res, next) => {
-  const arrayOfInputSales = req.body;
-
-  await arrayOfInputSales.map((sale) => {
-    const { product_id: productId, quantity } = sale;
-    if (!productId) return res.status(400).json({ message: '"product_id" is required' });
-    if (!quantity) return res.status(400).json({ message: '"quantity" is required' });
-    if (typeof quantity === 'string' || quantity <= 0) {
-      return res.status(422).json(
-        { message: '"quantity" must be a number larger than or equal to 1' },
+const getErrors = (arrayOfInputSales) => {
+  const arrayOfErrors = [];
+  arrayOfInputSales.map((sale) => {
+  const { product_id: productId, quantity } = sale;
+  switch (true) {
+    case (!productId):
+      return arrayOfErrors.push({ code: 400, message: '"product_id" is required' });
+    case (!quantity):
+      return arrayOfErrors.push({ code: 400, message: '"quantity" is required' });
+    case (typeof quantity === 'string' || quantity <= 0):
+      return arrayOfErrors.push(
+        { code: 422, message: '"quantity" must be a number larger than or equal to 1' },
       );
-    }
-  return {};
+    default:
+      return {};
+  }
   });
+  return arrayOfErrors;
+};
+
+const validateSale = (req, res, next) => {
+  const arrayOfInputSales = req.body;
+  const arrayOfErrors = getErrors(arrayOfInputSales);
+  
+  if (arrayOfErrors.length > 0) {
+    const { code, message } = arrayOfErrors[0];
+    return res.status(code).json({ message });
+  }
 
   next();
 };
