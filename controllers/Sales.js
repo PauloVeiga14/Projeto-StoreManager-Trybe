@@ -6,6 +6,7 @@ const getAll = async (_req, res) => {
 };
 
 const findSaleById = async (req, res) => {
+  const productId = 'product_id';
   const { id } = req.params;
   const arrayOfSalesById = [];
   const arrayOfSales = await Sales.getAll();
@@ -16,7 +17,7 @@ const findSaleById = async (req, res) => {
   salesById.map((sale) => { 
     const newObj = {
       date: sale.date,
-      productId: sale.product_id,
+      [productId]: sale.product_id,
       quantity: sale.quantity,
     };
     arrayOfSalesById.push(newObj);
@@ -39,14 +40,15 @@ const createSaleId = async () => {
   return saleId;
 };
 
-const mapping = async (saleId, array) => {
+const mapping = async (saleId, arrayOfInputSales) => {
+  const productId = 'product_id';
   const soldItem = [];
-  await array.map((sale) => {
-    const { product_id: productId, quantity: productQuantity } = sale;
-    Sales.createSale(saleId, productId, productQuantity);
+  await arrayOfInputSales.map((sale) => {
+    const { product_id, quantity } = sale;
+    Sales.createSale(saleId, product_id, quantity);
     soldItem.push({
-      productId,
-      productQuantity,
+      [productId]: sale.product_id,
+      quantity: sale.quantity,
     });
     return {};
   });
@@ -57,7 +59,7 @@ const createSale = async (req, res) => {
   const arrayOfInputSales = req.body;
   const saleId = await createSaleId();
   const soldItem = await mapping(saleId, arrayOfInputSales);
-
+  
   return res.status(201).json({
     id: saleId,
     itemsSold: soldItem, 
