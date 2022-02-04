@@ -24,13 +24,15 @@ describe("Testando a camada model dos produtos", () => {
         expect(myObject).to.be.an("object");
       });  
 
+      // Excluir linhas 28-31
       it("O objeto possui a propriedade insertId", async () => {
         const myObject = await ProductsModels.createProduct(product.name, product.quantity);
         expect(myObject).to.have.a.property("insertId");
       });
+      // Excluir linhas 28-31
     });
   });
 
-  
+
 
 });
