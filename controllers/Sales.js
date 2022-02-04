@@ -56,7 +56,7 @@ const mapping = async (saleId, arrayOfInputSales) => {
 };
 
 const createSale = async (req, res) => {
-  const arrayOfInputSales = req.body;
+  const arrayOfInputSales = req.body[0];
   const saleId = await createSaleId();
   const soldItem = await mapping(saleId, arrayOfInputSales);
   
@@ -65,9 +65,28 @@ const createSale = async (req, res) => {
     itemsSold: soldItem, 
   });
 };
+
+const updateSale = async (req, res) => {
+  const productKeyId = 'product_id';
+  const { id } = req.params;
+  const { product_id: productId, quantity } = req.body[0];
+
+  await Sales.updateSale(productId, quantity, id);
+    
+  return res.status(200).json({ 
+    saleId: id,
+    itemUpdated: [
+      {
+        [productKeyId]: productId,
+        quantity,
+      },
+    ],
+   });
+};
   
 module.exports = {
   getAll,
   findSaleById,
   createSale,
+  updateSale,
 };
