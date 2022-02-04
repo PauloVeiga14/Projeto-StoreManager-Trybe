@@ -19,8 +19,18 @@ describe("Testando a camada model dos produtos", () => {
         connection.execute.restore();
       });
 
+      it("Retorna um objeto", async () => {
+        const myObject = await ProductsModels.createProduct(product.name, product.quantity);
+        expect(myObject).to.be.an("object");
+      });  
 
-      
-    })
-  })
-})
+      it("O objeto possui a propriedade insertId", async () => {
+        const myObject = await ProductsModels.createProduct(product.name, product.quantity);
+        expect(myObject).to.have.a.property("insertId");
+      });
+    });
+  });
+
+  
+
+});
