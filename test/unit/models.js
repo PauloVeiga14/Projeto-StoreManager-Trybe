@@ -69,7 +69,6 @@ describe("Testando a camada model dos produtos", () => {
     });
   });
 
-  //Melhorar esse teste
   describe("Deleta o produto", () => {
     describe("Produto deletado com sucesso", () => {
       before(async ()=> {
