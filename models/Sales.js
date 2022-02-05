@@ -14,19 +14,19 @@ const getAll = async () => {
   return sales;
 };
 
-// const createSaleId = async () => {
-//   const [insertSale] = await connection.execute('INSERT INTO StoreManager.sales VALUES ();');
-//   return insertSale;
-// };
+const createSaleId = async () => {
+  const [insertSale] = await connection.execute('INSERT INTO StoreManager.sales VALUES ();');
+  return insertSale;
+};
 
-// const createSale = async (saleId, productId, quantity) => {
-//   await connection.execute('SET FOREIGN_KEY_CHECKS=0;');
-//   const [newSaleProduct] = await connection.execute(`
-//     INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?)`,
-//   [saleId, productId, quantity]);
-//   await connection.execute('SET FOREIGN_KEY_CHECKS=1;');
-//   return newSaleProduct;
-// };
+const createSale = async (saleId, productId, quantity) => {
+  // await connection.execute('SET FOREIGN_KEY_CHECKS=0;');
+  const query = `INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity) 
+  VALUES (?, ?, ?)`;
+  const newSaleProduct = await connection.execute(query, [saleId, productId, quantity]);
+  // await connection.execute('SET FOREIGN_KEY_CHECKS=1;');
+  return newSaleProduct;
+};
 
 const updateSale = async (productId, newQuantity, id) => {
   const [sale] = await connection.execute(`
@@ -40,7 +40,7 @@ const updateSale = async (productId, newQuantity, id) => {
 
 module.exports = {
   getAll,
-  // createSaleId,
-  // createSale,
+  createSaleId,
+  createSale,
   updateSale,
 };
