@@ -20,11 +20,11 @@ const createSaleId = async () => {
 };
 
 const createSale = async (saleId, productId, quantity) => {
-  await connection.execute('SET FOREIGN_KEY_CHECKS=0;');
+  // await connection.execute('SET FOREIGN_KEY_CHECKS=0;');
   const [newSaleProduct] = await connection.execute(`
     INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?)`,
   [saleId, productId, quantity]);
-  await connection.execute('SET FOREIGN_KEY_CHECKS=1;');
+  // await connection.execute('SET FOREIGN_KEY_CHECKS=1;');
   return newSaleProduct;
 };
 
