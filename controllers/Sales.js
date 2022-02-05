@@ -29,13 +29,13 @@ const findSaleById = async (req, res) => {
 
 const createSaleId = async () => {
   await Sales.createSaleId();
-  const arrayOfSales = await Sales.getAllSales();
+  const arrayOfSales = await Sales.getAll();
   let saleId;
   if (arrayOfSales.length === 0) { 
     saleId = 1;
   } else {
     const indexOfLastSale = arrayOfSales.length - 1;
-    saleId = arrayOfSales[indexOfLastSale].id;
+    saleId = arrayOfSales[indexOfLastSale].saleId + 1;
   }
   return saleId;
 };
@@ -56,7 +56,7 @@ const mapping = async (saleId, arrayOfInputSales) => {
 };
 
 const createSale = async (req, res) => {
-  const arrayOfInputSales = req.body[0];
+  const arrayOfInputSales = req.body;
   const saleId = await createSaleId();
   const soldItem = await mapping(saleId, arrayOfInputSales);
   

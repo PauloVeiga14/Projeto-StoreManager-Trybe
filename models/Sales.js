@@ -14,11 +14,6 @@ const getAll = async () => {
   return sales;
 };
 
-const getAllSales = async () => {
-  const [sale] = await connection.execute('SELECT * FROM StoreManager.sales');
-  return sale;
-};
-
 const createSaleId = async () => {
   const [insertSale] = await connection.execute('INSERT INTO StoreManager.sales VALUES ();');
   return insertSale;
@@ -45,7 +40,6 @@ const updateSale = async (productId, newQuantity, id) => {
 
 module.exports = {
   getAll,
-  getAllSales,
   createSaleId,
   createSale,
   updateSale,
