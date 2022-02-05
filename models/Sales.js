@@ -19,7 +19,7 @@ const createSaleId = async () => {
   return insertSale;
 };
 
-// Função promblemática:
+// Função promblemática::
 
 const createSale = async (saleId, productId, quantity) => {
   // await connection.execute('SET FOREIGN_KEY_CHECKS=0;');
