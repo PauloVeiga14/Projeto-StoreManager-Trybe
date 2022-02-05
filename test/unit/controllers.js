@@ -1,3 +1,20 @@
+const sinon = require("sinon");
+const { expect } = require("chai");
+const { it } = require("mocha");
+
+const connection = require("../../models/connection");
+const ProductsControllers = require("../../controllers/Products");
+const SalesControllers = require("../../controllers/Sales");
+
+
+
+
+
+
+
+
+
+
 // Guardar para teste de controller!
     // describe("Lista produtos por id", () => {
     //   describe("Produto é encontrado com sucesso", () => {

@@ -82,8 +82,8 @@ describe("Testando a camada model dos produtos", () => {
       })
 
       it("O objeto de retorno possui a propriedade affectedRows", async () => {
-        const response = await ProductsModels.deleteProduct(1);
-        expect(response).to.have.property("affectedRows").equal(1);
+        const response = await ProductsModels.deleteProduct();
+        expect(response[0]).to.have.property("affectedRows").equal(1);
       });
     });
   });  
