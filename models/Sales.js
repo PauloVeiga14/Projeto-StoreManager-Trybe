@@ -19,6 +19,8 @@ const createSaleId = async () => {
   return insertSale;
 };
 
+// Função promblemática:
+
 const createSale = async (saleId, productId, quantity) => {
   // await connection.execute('SET FOREIGN_KEY_CHECKS=0;');
   const query = `INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity) 
