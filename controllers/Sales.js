@@ -27,44 +27,44 @@ const findSaleById = async (req, res) => {
   return res.status(200).json(arrayOfSalesById);
 };
 
-const createSaleId = async () => {
-  await Sales.createSaleId();
-  const arrayOfSales = await Sales.getAll();
-  let saleId;
-  if (arrayOfSales.length === 0) { 
-    saleId = 1;
-  } else {
-    const indexOfLastSale = arrayOfSales.length - 1;
-    saleId = arrayOfSales[indexOfLastSale].saleId + 1;
-  }
-  return saleId;
-};
+// const createSaleId = async () => {
+//   await Sales.createSaleId();
+//   const arrayOfSales = await Sales.getAll();
+//   let saleId;
+//   if (arrayOfSales.length === 0) { 
+//     saleId = 1;
+//   } else {
+//     const indexOfLastSale = arrayOfSales.length - 1;
+//     saleId = arrayOfSales[indexOfLastSale].saleId + 1;
+//   }
+//   return saleId;
+// };
 
-const mapping = async (saleId, arrayOfInputSales) => {
-  const productId = 'product_id';
-  const soldItem = [];
-  await arrayOfInputSales.map((sale) => {
-    const { product_id, quantity } = sale;
-    Sales.createSale(saleId, product_id, quantity);
-    soldItem.push({
-      [productId]: sale.product_id,
-      quantity: sale.quantity,
-    });
-    return {};
-  });
-  return soldItem;
-};
+// const mapping = async (saleId, arrayOfInputSales) => {
+//   const productId = 'product_id';
+//   const soldItem = [];
+//   await arrayOfInputSales.map((sale) => {
+//     const { product_id, quantity } = sale;
+//     Sales.createSale(saleId, product_id, quantity);
+//     soldItem.push({
+//       [productId]: sale.product_id,
+//       quantity: sale.quantity,
+//     });
+//     return {};
+//   });
+//   return soldItem;
+// };
 
-const createSale = async (req, res) => {
-  const arrayOfInputSales = req.body;
-  const saleId = await createSaleId();
-  const soldItem = await mapping(saleId, arrayOfInputSales);
+// const createSale = async (req, res) => {
+//   const arrayOfInputSales = req.body;
+//   const saleId = await createSaleId();
+//   const soldItem = await mapping(saleId, arrayOfInputSales);
   
-  return res.status(201).json({
-    id: saleId,
-    itemsSold: soldItem, 
-  });
-};
+//   return res.status(201).json({
+//     id: saleId,
+//     itemsSold: soldItem, 
+//   });
+// };
 
 const updateSale = async (req, res) => {
   const productKeyId = 'product_id';
@@ -87,6 +87,6 @@ const updateSale = async (req, res) => {
 module.exports = {
   getAll,
   findSaleById,
-  createSale,
+  // createSale,
   updateSale,
 };

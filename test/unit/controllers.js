@@ -9,7 +9,6 @@ const SalesControllers = require("../../controllers/Sales");
 
 
 
-
 // Guardar para teste de controller!
     // describe("Lista produtos por id", () => {
     //   describe("Produto é encontrado com sucesso", () => {
