@@ -117,27 +117,27 @@ describe("Testando a camada models das Sales", () => {
     });
   });
 
-  describe("Testa a inclusão de uma venda", () => {
-    describe("Inclusão feita com sucesso", () => {
-      before(async () => {
-        const execute = [{ insertId: 1 }];
-        sinon.stub(connection, "execute").resolves(execute);
-      });
+  // describe("Testa a inclusão de uma venda", () => {
+  //   describe("Inclusão feita com sucesso", () => {
+  //     before(async () => {
+  //       const execute = [{ insertId: 1 }];
+  //       sinon.stub(connection, "execute").resolves(execute);
+  //     });
 
-      after(async () => {
-        connection.execute.restore();
-      });
+  //     after(async () => {
+  //       connection.execute.restore();
+  //     });
 
-      it("Retorna dois objetos com a propriedade insertId", async () => {
-        const myFirstObject = await SalesModels.createSaleId();
-        const mySecondObject = await SalesModels.createSale();
-        expect(myFirstObject).to.be.an("object");
-        expect(myFirstObject).to.have.a.property("insertId").equal(1);
-        expect(mySecondObject).to.be.an("object");
-        expect(mySecondObject).to.have.a.property("insertId").equal(1);
-      })
-    });
-  });
+  //     it("Retorna dois objetos com a propriedade insertId", async () => {
+  //       const myFirstObject = await SalesModels.createSaleId();
+  //       const mySecondObject = await SalesModels.createSale();
+  //       expect(myFirstObject).to.be.an("object");
+  //       expect(myFirstObject).to.have.a.property("insertId").equal(1);
+  //       expect(mySecondObject).to.be.an("object");
+  //       expect(mySecondObject).to.have.a.property("insertId").equal(1);
+  //     })
+  //   });
+  // });
 
 
   describe("Testa a atualização de uma venda", () => {
