@@ -22,7 +22,7 @@ app.get('/products/:id', Products.findById);
 app.put('/products/:id', validateProductName, validateProductQuantity, Products.updateProduct);
 app.delete('/products/:id', Products.deleteProduct);
 app.get('/sales', Sales.getAll);
-app.post('/sales', validateSale, Sales.createSale);
+app.post('/sales', validateSale, Sales.insertSaleProduct);
 app.get('/sales/:id', Sales.findSaleById);
 
 app.put('/sales/:id', validateSale, Sales.updateSale);
