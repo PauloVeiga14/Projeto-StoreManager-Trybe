@@ -1,21 +1,19 @@
-const sale = require('../models/Sales');
+const Sale = require('../models/Sales');
 
-const insert = async (saleId, arr) => {
-  const newArray = [];
-  arr.forEach((element) => {
-    newArray.push(saleId, element.product_id, element.quantity);
-  });
-  const saleProduct = await sale.insertSaleProduct(newArray);
-  return saleProduct;
+const insert = async (sales) => {
+  const [id] = await Sale.insertSale();
+  const newSale = sales.map((element) => [id.insertId, element.product_id, element.quantity]);
+  await Sale.insertSaleProduct(newSale);
+  return { id: id.insertId, itemsSold: sales };
 };
 
 const getAll = async () => {
-    const sales = await sale.getAll();
+    const sales = await Sale.getAll();
     return sales;
   };
   
   const getById = async (id) => {
-    const foundSale = await sale.getById(id);
+    const foundSale = await Sale.getById(id);
     return foundSale;
   };
 

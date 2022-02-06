@@ -3,11 +3,11 @@ const Sales = require('../models/Sales');
 const { insert, getAll, getById } = require('../services/Sales');
 
 const insertSaleProduct = async (req, res) => {
-  const [id] = await Sales.insertSale();
+  const sales = req.body;
 
-  await insert(id.insertId, req.body);
+  const saleProduct = await insert(sales);
 
-  res.status(201).json({ id: id.insertId, itemsSold: req.body });
+  res.status(201).json(saleProduct);
 };
 
 const getAllSales = async (_req, res) => {

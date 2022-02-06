@@ -37,8 +37,6 @@ const validateSaleId = async (req, res, next) => {
 
   const saleExists = await getById(id);
 
-  console.log(saleExists);
-
   if (saleExists.length === 0) return res.status(404).json({ message: 'Sale not found' });
 
   next();

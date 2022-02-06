@@ -35,10 +35,10 @@ const insertSale = async () => {
   return sale;
 };
 
-const insertSaleProduct = async (arr) => {
+const insertSaleProduct = async (array) => {
   const query = `INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity) 
-  VALUES (?, ?, ?)`;
-  const saleProduct = await connection.query(query, arr);
+  VALUES ?`;
+  const saleProduct = await connection.query(query, [array]);
   return saleProduct;
 };
 
