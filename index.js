@@ -5,7 +5,7 @@ const Products = require('./controllers/Products');
 const Sales = require('./controllers/Sales');
 const validateProductName = require('./middlewares/validateProductName');
 const validateProductQuantity = require('./middlewares/validateProductQuantity');
-const validateSale = require('./middlewares/validateSale');
+const Validates = require('./middlewares/validateSale');
 
 const app = express();
 
@@ -22,10 +22,10 @@ app.get('/products/:id', Products.findById);
 app.put('/products/:id', validateProductName, validateProductQuantity, Products.updateProduct);
 app.delete('/products/:id', Products.deleteProduct);
 app.get('/sales', Sales.getAllSales);
-app.post('/sales', validateSale, Sales.insertSaleProduct);
-app.get('/sales/:id', Sales.getSaleById);
+app.post('/sales', Validates.validateSale, Sales.insertSaleProduct);
+app.get('/sales/:id', Validates.validateSaleId, Sales.getSaleById);
 
-app.put('/sales/:id', validateSale, Sales.updateSale);
+app.put('/sales/:id', Validates.validateSale, Sales.updateSale);
 
 app.listen(process.env.PORT, () => {
   console.log(`Escutando na porta ${process.env.PORT}`);

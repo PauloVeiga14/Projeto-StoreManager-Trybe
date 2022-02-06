@@ -1,3 +1,5 @@
+const { getById } = require('../services/Sales');
+
 const getErrors = (arrayOfInputSales) => {
   const arrayOfErrors = [];
   arrayOfInputSales.map((sale) => {
@@ -30,4 +32,19 @@ const validateSale = (req, res, next) => {
   next();
 };
 
-module.exports = validateSale;
+const validateSaleId = async (req, res, next) => {
+  const { id } = req.params;
+
+  const saleExists = await getById(id);
+
+  console.log(saleExists);
+
+  if (saleExists.length === 0) return res.status(404).json({ message: 'Sale not found' });
+
+  next();
+};
+
+module.exports = {
+  validateSale,
+  validateSaleId,
+};
