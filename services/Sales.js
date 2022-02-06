@@ -9,6 +9,18 @@ const insert = async (saleId, arr) => {
   return saleProduct;
 };
 
+const getAll = async () => {
+    const sales = await sale.getAll();
+    return sales;
+  };
+  
+  const getById = async (id) => {
+    const foundSale = await sale.getById(id);
+    return foundSale;
+  };
+
 module.exports = {
   insert,
+  getAll,
+  getById,
 }; 

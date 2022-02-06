@@ -21,7 +21,7 @@ const getById = async (id) => {
   FROM 
     StoreManager.sales_products as products
   JOIN
-    StoreManager.salas as sales
+    StoreManager.sales as sales
   ON
     products.sale_id = sales.id
   WHERE

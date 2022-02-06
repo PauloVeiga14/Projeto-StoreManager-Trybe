@@ -1,6 +1,6 @@
 const Sales = require('../models/Sales');
 
-const { insert } = require('../services/Sales');
+const { insert, getAll, getById } = require('../services/Sales');
 
 const insertSaleProduct = async (req, res) => {
   const [id] = await Sales.insertSale();
@@ -10,14 +10,14 @@ const insertSaleProduct = async (req, res) => {
   res.status(201).json({ id: id.insertId, itemsSold: req.body });
 };
 
-const getAll = async (_req, res) => {
-  const sales = await Sales.getAll();
+const getAllSales = async (_req, res) => {
+  const sales = await getAll();
   return res.status(200).json(sales);
 };
 
 const getSaleById = async (req, res) => {
   const { id } = req.params;
-  const foundSale = await Sales.getById(id);
+  const foundSale = await getById(id);
 
   res.status(200).json(foundSale);
 };
@@ -41,7 +41,7 @@ const updateSale = async (req, res) => {
 };
   
 module.exports = {
-  getAll,
+  getAllSales,
   getSaleById,
   insertSaleProduct,
   updateSale,
