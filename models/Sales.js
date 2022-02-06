@@ -14,6 +14,22 @@ const getAll = async () => {
   return sales;
 };
 
+const getById = async (id) => {
+  const [sales] = await connection.execute(`
+  SELECT
+    date, product_id, quantity
+  FROM 
+    StoreManager.sales_products as products
+  JOIN
+    StoreManager.salas as sales
+  ON
+    products.sale_id = sales.id
+  WHERE
+    products.sale_id = ?
+  `, [id]);
+  return sales;
+};
+
 const insertSale = async () => {
   const sale = await connection.execute('INSERT INTO StoreManager.sales () VALUES ()');
   return sale;
@@ -38,6 +54,7 @@ const updateSale = async (productId, newQuantity, id) => {
 
 module.exports = {
   getAll,
+  getById,
   insertSale,
   insertSaleProduct,
   updateSale,

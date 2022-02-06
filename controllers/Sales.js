@@ -15,26 +15,11 @@ const getAll = async (_req, res) => {
   return res.status(200).json(sales);
 };
 
-const findSaleById = async (req, res) => {
-  const productId = 'product_id';
+const getSaleById = async (req, res) => {
   const { id } = req.params;
-  const arrayOfSalesById = [];
-  const arrayOfSales = await Sales.getAll();
-  const salesById = arrayOfSales.filter((sale) => sale.saleId === Number(id));
-  
-  if (salesById.length === 0) return res.status(404).json({ message: 'Sale not found' });
-  
-  salesById.map((sale) => { 
-    const newObj = {
-      date: sale.date,
-      [productId]: sale.product_id,
-      quantity: sale.quantity,
-    };
-    arrayOfSalesById.push(newObj);
-    return arrayOfSalesById;
-  }); 
+  const foundSale = await Sales.getById(id);
 
-  return res.status(200).json(arrayOfSalesById);
+  res.status(200).json(foundSale);
 };
 
 const updateSale = async (req, res) => {
@@ -57,7 +42,7 @@ const updateSale = async (req, res) => {
   
 module.exports = {
   getAll,
-  findSaleById,
+  getSaleById,
   insertSaleProduct,
   updateSale,
 };
