@@ -115,29 +115,37 @@ describe("Testando a camada models das Sales", () => {
       expect(myArray[0]).to.have.property("product_id");
       expect(myArray[0]).to.have.property("quantity");
     });
+
+    it("Retorna um array de objetos com props saleId, date, product_id e quantity", async () => {
+      const myArray = await SalesModels.getById(1);
+      expect(myArray).to.be.an("array");
+      expect(myArray[0]).to.be.an("object");
+      expect(myArray[0]).to.have.property("saleId");
+      expect(myArray[0]).to.have.property("date");
+      expect(myArray[0]).to.have.property("product_id");
+      expect(myArray[0]).to.have.property("quantity");
+    })
   });
 
-  // describe("Testa a inclusão de uma venda", () => {
-  //   describe("Inclusão feita com sucesso", () => {
-  //     before(async () => {
-  //       const execute = [{ insertId: 1 }];
-  //       sinon.stub(connection, "execute").resolves(execute);
-  //     });
+  describe("Testa a inclusão de uma venda", () => {
+    describe("Inclusão feita com sucesso", () => {
+      before(async () => {
+        const execute = [{ insertId: 1 }];
+        sinon.stub(connection, "execute").resolves(execute);
+      });
 
-  //     after(async () => {
-  //       connection.execute.restore();
-  //     });
+      after(async () => {
+        connection.execute.restore();
+      });
 
-  //     it("Retorna dois objetos com a propriedade insertId", async () => {
-  //       const myFirstObject = await SalesModels.createSaleId();
-  //       const mySecondObject = await SalesModels.createSale();
-  //       expect(myFirstObject).to.be.an("object");
-  //       expect(myFirstObject).to.have.a.property("insertId").equal(1);
-  //       expect(mySecondObject).to.be.an("object");
-  //       expect(mySecondObject).to.have.a.property("insertId").equal(1);
-  //     })
-  //   });
-  // });
+      it("Retorna um objeto com a propriedade insertId", async () => {
+        const myObject = await SalesModels.insertSale();
+        expect(myObject[0]).to.be.an("object");
+        expect(myObject[0]).to.have.a.property("insertId").equal(1);
+      })
+
+    });
+  });
 
 
   describe("Testa a atualização de uma venda", () => {
