@@ -1,5 +1,4 @@
 const Sales = require('../models/Sales');
-const Products = require('../models/Products');
 
 const { insert, getAll, getById } = require('../services/Sales');
 
