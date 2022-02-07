@@ -8,17 +8,6 @@ const insertSaleProduct = async (req, res) => {
 
   const saleProduct = await insert(sales);
 
-  sales.map(async (product) => {
-    const id = product.product_id;
-    const products = await Products.getAll();
-    const findProduct = products.find((p) => p.id === Number(id));
-    const productQuantity = findProduct.quantity;
-    const newQuantity = productQuantity - product.quantity;
-
-    await Products.updateProductBySale(product.product_id, newQuantity);
-    return {};
-  }); 
-
   return res.status(201).json(saleProduct);
 };
 
