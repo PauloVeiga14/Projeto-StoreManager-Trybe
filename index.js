@@ -27,6 +27,8 @@ app.get('/sales/:id', Validates.validateSaleId, Sales.getSaleById);
 
 app.put('/sales/:id', Validates.validateSale, Sales.updateSale);
 
+app.delete('/sales/:id', Sales.deleteSale);
+
 app.listen(process.env.PORT, () => {
   console.log(`Escutando na porta ${process.env.PORT}`);
 });
