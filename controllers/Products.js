@@ -9,10 +9,13 @@ const getAll = async (_req, res) => {
 const findById = async (req, res) => {
   const { id } = req.params;
   const products = await Products.getAll();
+
+  console.log(products);
+
   const findProduct = products.find((product) => product.id === Number(id));
   
   if (!findProduct) return res.status(404).json({ message: 'Product not found' });
-
+  
   return res.status(200).json(findProduct);
 };
 
@@ -24,6 +27,8 @@ const createProduct = async (req, res) => {
   if (findProduct !== undefined) return res.status(409).json({ message: 'Product already exists' });
 
   const newProduct = await Products.createProduct(name, quantity);
+
+  console.log(res);
 
   return res.status(201).json({
     id: newProduct.insertId,

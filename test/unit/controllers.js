@@ -4,31 +4,95 @@ const { it } = require("mocha");
 
 const connection = require("../../models/connection");
 const ProductsControllers = require("../../controllers/Products");
+const ProductsModels = require("../../models/Products");
 const SalesControllers = require("../../controllers/Sales");
+const SalesServices = require("../../services/Sales");
+const req = require("express/lib/request");
 
 describe("Testando a camada de controllers dos Products", () => {
-  describe("Testando a inclusão de produto", async () => {
-    describe("Produtos incluído com sucesso", () => {
+  describe("Testando a listagem de produtos", async () => {
+    describe("Produtos exibidos com sucesso", () => {
       const response = {};
       const request = {};
       
       before(() => {
-        request.body = { name: 'Caneca de café', quantity: 20 };
-
         response.status = sinon.stub().returns(response);
-        response.send = sinon.stub().returns();
+        response.json = sinon.stub().returns();
 
-        sinon.stub(ProductsControllers, 'createProduct').resolves(true);
+        sinon.stub(ProductsModels, 'getAll').resolves(true);
       });
 
       after(() => {
-        ProductsControllers.createProduct.restore();
+        ProductsModels.getAll.restore();
       });
 
-      it("É chamado um status com código 201", async () => {
-        await ProductsControllers.createProduct(request, response);
-        expect(response.status.calledWith(201)).to.be.equal(false);
-      }); 
+      it("É chamado um status com código 200", async () => {
+        await ProductsControllers.getAll(request, response);
+        expect(response.status.calledWith(200)).to.be.equal(true);
+      });
+
+
+    });
+  });
+});
+
+describe("Testando a camada de controllers dos Sales", () => {
+  describe("Testando a listagem de vendas", async () => {
+    describe("Vendas exibidas com sucesso", () => {
+      const response = {};
+      const request = {};
+      
+      before(() => {
+        response.status = sinon.stub().returns(response);
+        response.json = sinon.stub().returns();
+
+        const execute = [{ affectedRows: 1 }];
+        sinon.stub(connection, "execute").resolves(execute);
+
+        sinon.stub(SalesServices, 'getAll').resolves(true);
+      });
+
+      after(() => {
+        connection.execute.restore();
+        SalesServices.getAll.restore();
+      });
+
+      it("É chamado um status com código 200", async () => {
+        await SalesControllers.getAllSales(request, response);
+        expect(response.status.calledWith(200)).to.be.equal(true);
+      });
+
+
+    });
+  });
+
+  describe("Testando a listagem de vendas por id", async () => {
+    describe("Vendas exibidas com sucesso", () => {
+      const response = {};
+      const request = {};
+      
+      before(() => {
+        request.params = {id: 1}
+        response.status = sinon.stub().returns(response);
+        response.json = sinon.stub().returns();
+
+        const execute = [{ affectedRows: 1 }];
+        sinon.stub(connection, "execute").resolves(execute);
+
+        sinon.stub(SalesServices, 'getById').resolves(true);
+      });
+
+      after(() => {
+        connection.execute.restore();
+        SalesServices.getById.restore();
+      });
+
+      it("É chamado um status com código 200", async () => {
+        await SalesControllers.getSaleById(request, response);
+        expect(response.status.calledWith(200)).to.be.equal(true);
+      });
+
+
     });
   });
 });
