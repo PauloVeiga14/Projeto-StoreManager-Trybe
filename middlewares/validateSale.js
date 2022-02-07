@@ -1,4 +1,5 @@
 const { getById } = require('../services/Sales');
+const Products = require('../models/Products');
 
 const getErrors = (arrayOfInputSales) => {
   const arrayOfErrors = [];
@@ -42,7 +43,35 @@ const validateSaleId = async (req, res, next) => {
   next();
 };
 
+const getArrayOfQuantitys = async (sales) => {
+  const arrayOfQuantitys = [];
+  const products = await Products.getAll();
+
+  sales.map((product) => {
+    const id = product.product_id;
+    const findProduct = products.find((p) => p.id === Number(id));
+    const productQuantity = findProduct.quantity;
+    const newQuantity = productQuantity - product.quantity;
+    if (newQuantity < 0) {
+      arrayOfQuantitys.push(newQuantity);
+    }
+    return {};
+  });
+
+  return arrayOfQuantitys;
+};
+
+const validateAmount = async (req, res, next) => {
+  const sales = req.body;
+  const myArray = await getArrayOfQuantitys(sales);
+  if (myArray.length > 0) {
+    return res.status(422).json({ message: 'Such amount is not permitted to sell' });
+  }
+  next();
+};
+
 module.exports = {
+  validateAmount,
   validateSale,
   validateSaleId,
 };
